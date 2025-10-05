@@ -5,12 +5,18 @@
     "description": "cheating daddy",
     "main": "src/index.js",
     "scripts": {
+        "prestart": "npm run build:renderer",
         "start": "electron-forge start",
+        "dev": "npm run build:renderer:watch & electron-forge start",
         "package": "electron-forge package",
         "make": "electron-forge make",
         "publish": "electron-forge publish",
         "lint": "echo \"No linting configured\"",
-        "test": "vitest run"
+        "test": "vitest run",
+        "build:renderer": "esbuild src/react/index.jsx --bundle --outfile=src/react/renderer.js --format=esm --platform=browser --jsx=automatic",
+        "build:renderer:watch": "esbuild src/react/index.jsx --bundle --outfile=src/react/renderer.js --format=esm --platform=browser --watch --jsx=automatic",
+        "prepackage": "npm run build:renderer",
+        "premake": "npm run build:renderer"
     },
     "keywords": [
         "cheating daddy",
@@ -26,7 +32,9 @@
     "license": "GPL-3.0",
     "dependencies": {
         "@google/genai": "^1.2.0",
-        "electron-squirrel-startup": "^1.0.1"
+        "electron-squirrel-startup": "^1.0.1",
+        "react": "^18.3.1",
+        "react-dom": "^18.3.1"
     },
     "devDependencies": {
         "@electron-forge/cli": "^7.8.1",
@@ -39,8 +47,9 @@
         "@electron-forge/plugin-fuses": "^7.8.1",
         "@electron/fuses": "^1.8.0",
         "@reforged/maker-appimage": "^5.0.0",
-        "vitest": "^1.6.1",
+        "electron": "^30.0.5",
+        "esbuild": "^0.23.1",
         "jsdom": "^23.2.0",
-        "electron": "^30.0.5"
+        "vitest": "^1.6.1"
     }
 }
